@@ -63,6 +63,15 @@ class Console {
     Console.DOM_NODE.appendChild(li);
   }
 
+  private _createSimpleString(str: string) {
+    let fragment = document.createDocumentFragment()
+    let string = document.createElement('span');
+    string.className = '_stringSimple';
+    string.innerHTML = str;
+    fragment.appendChild(string);
+    return fragment;
+  }
+
   private _createString(str: string){
     let fragment = document.createDocumentFragment()
     let start = this._createCommon('"');
