@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
@@ -18,14 +18,18 @@ module.exports = {
     rules:[
       {
         test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'less-loader']
-        })
+        use: [ MiniCssExtractPlugin.loader, "css-loader", "less-loader" ]
       },
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader'
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true
+            }
+          }
+        ]
       }
     ]
   },
@@ -33,7 +37,9 @@ module.exports = {
     new HtmlwebpackPlugin({
       template: path.join(__dirname, './src/index.html')
     }),
-    new ExtractTextPlugin('console.css'),
+    new MiniCssExtractPlugin({
+      filename: "console.css"
+    }),
     new OptimizeCssAssetsPlugin()
   ],
   target: 'web',

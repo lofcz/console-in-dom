@@ -28,7 +28,7 @@ class Console {
     li.appendChild(timeLine);
 
     if(typeOf(msg) === IsType[0]){
-      let str = this._createString(msg);
+      let str = this._createSimpleString(msg);
       li.appendChild(str);
     }else if(typeOf(msg) === IsType[1]){
       let num = this._createNumber(msg);

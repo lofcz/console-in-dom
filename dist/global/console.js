@@ -49,13 +49,13 @@ var Console = /** @class */ (function () {
     };
     Console.prototype.log = function (msg) {
         // console.log(typeOf(msg))
-        // console.log(msg);
+        console.log(msg);
         var li = document.createElement('li');
         li.className = 'output-li';
         var timeLine = this._createTimeLine();
         li.appendChild(timeLine);
         if (typeOf(msg) === IsType[0]) {
-            var str = this._createString(msg);
+            var str = this._createSimpleString(msg);
             li.appendChild(str);
         }
         else if (typeOf(msg) === IsType[1]) {
@@ -76,7 +76,7 @@ var Console = /** @class */ (function () {
             var array = this._createArray(msg);
             li.appendChild(array);
         }
-        else if (typeOf(msg) === IsType[6] || typeOf(msg) === IsType[8] || typeOf(msg) === IsType[9]) {
+        else if (typeOf(msg) === IsType[6] || typeOf(msg) === IsType[8] || typeOf(msg) === IsType[9]) { //Object Window MouseEvent
             this.array_tabs_count = 0;
             this.object_tabs_count = 0;
             var obj = this._createObject(msg);
@@ -93,6 +93,14 @@ var Console = /** @class */ (function () {
           li.appendChild(str);
         } */
         Console.DOM_NODE.appendChild(li);
+    };
+    Console.prototype._createSimpleString = function (str) {
+        var fragment = document.createDocumentFragment();
+        var string = document.createElement('span');
+        string.className = '_stringSimple';
+        string.innerHTML = str;
+        fragment.appendChild(string);
+        return fragment;
     };
     Console.prototype._createString = function (str) {
         var fragment = document.createDocumentFragment();
@@ -182,7 +190,7 @@ var Console = /** @class */ (function () {
             var undefined_hasRepeat = false;
             var null_hasRepeat = false;
             /* ergodic the Array's empty index*/
-            for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) {
+            for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) { // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of
                 var key = arr_1[_i];
                 len++;
                 if (typeOf(key) === IsType[0]) {
