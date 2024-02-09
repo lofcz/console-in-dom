@@ -6,6 +6,7 @@ declare class Console {
     private array_tabs_count;
     private object_tabs_count;
     static render(node?: HTMLElement): Console;
+    clear(): void;
     log(msg: any): void;
     private _createSimpleString;
     private _createString;

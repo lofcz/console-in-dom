@@ -18,9 +18,13 @@ class Console {
     return Console.log;
   }
 
+  clear() {
+    Console.DOM_NODE.innerHTML = "";
+  }
+
   log(msg: any) {
     // console.log(typeOf(msg))
-    console.log(msg)
+    //console.log(msg)
 
     let li = document.createElement('li');
     li.className = 'output-li';

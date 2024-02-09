@@ -21,7 +21,9 @@
     "compile_dist_rollup": "tsc -p ./tsconfig/tsconfig.es2015.json",
     "build_global": "rollup -c && node make-closure-core.js",
     "build_package": "node npm-publish.js",
-    "build2": "npm-run-all build_rollup build_global"
+    "build2": "npm-run-all build_all compile_dist_cjs compile_dist_rollup",
+    "build3": "npm run build_global",
+    "buildall": "npm run build_cjs & npm run build_rollup & npm run compile_dist_cjs & npm run compile_dist_rollup & npm run build3"
   },
   "keywords": [
     "console",
