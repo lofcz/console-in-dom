@@ -7,7 +7,7 @@ declare class Console {
     private object_tabs_count;
     static render(node?: HTMLElement): Console;
     clear(): void;
-    log(msg: any): void;
+    log(msg: any, cssClasses?: string[] | string): void;
     private _createSimpleString;
     private _createString;
     private _createNumber;

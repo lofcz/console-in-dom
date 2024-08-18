@@ -22,12 +22,24 @@ class Console {
     Console.DOM_NODE.innerHTML = "";
   }
 
-  log(msg: any) {
+  log(msg: any, cssClasses?: string[] | string) {
     // console.log(typeOf(msg))
     //console.log(msg)
 
     let li = document.createElement('li');
     li.className = 'output-li';
+
+    if (cssClasses) {
+      if (cssClasses instanceof Array) {
+        for (let cls of cssClasses) {
+          li.classList.add(cls);
+        }
+      }
+      else {
+        li.classList.add(cssClasses);
+      }
+    }
+
     let timeLine = this._createTimeLine();
     li.appendChild(timeLine);
 

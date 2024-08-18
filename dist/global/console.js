@@ -50,11 +50,22 @@ var Console = /** @class */ (function () {
     Console.prototype.clear = function () {
         Console.DOM_NODE.innerHTML = "";
     };
-    Console.prototype.log = function (msg) {
+    Console.prototype.log = function (msg, cssClasses) {
         // console.log(typeOf(msg))
         //console.log(msg)
         var li = document.createElement('li');
         li.className = 'output-li';
+        if (cssClasses) {
+            if (cssClasses instanceof Array) {
+                for (var _i = 0, cssClasses_1 = cssClasses; _i < cssClasses_1.length; _i++) {
+                    var cls = cssClasses_1[_i];
+                    li.classList.add(cls);
+                }
+            }
+            else {
+                li.classList.add(cssClasses);
+            }
+        }
         var timeLine = this._createTimeLine();
         li.appendChild(timeLine);
         if (typeOf(msg) === IsType[0]) {
