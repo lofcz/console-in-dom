@@ -50,9 +50,7 @@ var Console = /** @class */ (function () {
     Console.prototype.clear = function () {
         Console.DOM_NODE.innerHTML = "";
     };
-    Console.prototype.log = function (msg, cssClasses) {
-        // console.log(typeOf(msg))
-        //console.log(msg)
+    Console.prototype.log = function (msg, cssClasses, style) {
         var li = document.createElement('li');
         li.className = 'output-li';
         if (cssClasses) {
@@ -66,46 +64,45 @@ var Console = /** @class */ (function () {
                 li.classList.add(cssClasses);
             }
         }
+        if (style !== undefined) {
+            li.setAttribute("style", style);
+        }
         var timeLine = this._createTimeLine();
         li.appendChild(timeLine);
+        var childToAppend;
         if (typeOf(msg) === IsType[0]) {
             var str = this._createSimpleString(msg);
-            li.appendChild(str);
+            childToAppend = str;
         }
         else if (typeOf(msg) === IsType[1]) {
             var num = this._createNumber(msg);
-            li.appendChild(num);
+            childToAppend = num;
         }
         else if (typeOf(msg) === IsType[2]) {
             var bool = this._createBoolean(msg);
-            li.appendChild(bool);
+            childToAppend = bool;
         }
         else if (typeOf(msg) === IsType[3] || typeOf(msg) === IsType[4]) {
             var nulld = this._createNull(msg);
-            li.appendChild(nulld);
+            childToAppend = nulld;
         }
         else if (typeOf(msg) === IsType[5]) {
             this.array_tabs_count = 0;
             this.object_tabs_count = 0;
             var array = this._createArray(msg);
-            li.appendChild(array);
+            childToAppend = array;
         }
         else if (typeOf(msg) === IsType[6] || typeOf(msg) === IsType[8] || typeOf(msg) === IsType[9]) { //Object Window MouseEvent
             this.array_tabs_count = 0;
             this.object_tabs_count = 0;
             var obj = this._createObject(msg);
-            li.appendChild(obj);
+            childToAppend = obj;
         }
         else if (typeOf(msg) === IsType[7]) {
             var fun = this._createFunction(msg);
-            li.appendChild(fun);
-        } /* else if(typeOf(msg) === IsType[10]){// Error
-          let str = this._createString('Error');
-          li.appendChild(str);
-        }else if(typeOf(msg) === IsType[11]){// HTMLDocument
-          let str = this._createString('document 相关请直接查看浏览器自带Elements面板');
-          li.appendChild(str);
-        } */
+            childToAppend = fun;
+        }
+        li.appendChild(childToAppend);
         Console.DOM_NODE.appendChild(li);
     };
     Console.prototype._createSimpleString = function (str) {

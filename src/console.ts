@@ -22,10 +22,8 @@ class Console {
     Console.DOM_NODE.innerHTML = "";
   }
 
-  log(msg: any, cssClasses?: string[] | string) {
-    // console.log(typeOf(msg))
-    //console.log(msg)
-
+  log(msg: any, cssClasses?: string[] | string, style?: string) {
+    
     let li = document.createElement('li');
     li.className = 'output-li';
 
@@ -40,42 +38,43 @@ class Console {
       }
     }
 
+    if (style !== undefined) {
+        li.setAttribute("style", style);
+    }
+
     let timeLine = this._createTimeLine();
     li.appendChild(timeLine);
 
+    let childToAppend;
+
     if(typeOf(msg) === IsType[0]){
       let str = this._createSimpleString(msg);
-      li.appendChild(str);
+      childToAppend = str;
     }else if(typeOf(msg) === IsType[1]){
       let num = this._createNumber(msg);
-      li.appendChild(num);
+      childToAppend = num;
     }else if(typeOf(msg) === IsType[2]){
       let bool = this._createBoolean(msg);
-      li.appendChild(bool);
+      childToAppend = bool;
     }else if(typeOf(msg) === IsType[3] || typeOf(msg) === IsType[4]){
       let nulld = this._createNull(msg);
-      li.appendChild(nulld);
+      childToAppend = nulld;
     }else if(typeOf(msg) === IsType[5]){
       this.array_tabs_count = 0;
       this.object_tabs_count = 0;
       let array = this._createArray(msg);
-      li.appendChild(array);
+      childToAppend = array;
     }else if(typeOf(msg) === IsType[6] || typeOf(msg) === IsType[8] || typeOf(msg) === IsType[9]){//Object Window MouseEvent
       this.array_tabs_count = 0;
       this.object_tabs_count = 0;
       let obj = this._createObject(msg);
-      li.appendChild(obj);
+      childToAppend = obj;
     }else if(typeOf(msg) === IsType[7]){
       let fun = this._createFunction(msg);
-      li.appendChild(fun);
-    }/* else if(typeOf(msg) === IsType[10]){// Error
-      let str = this._createString('Error');
-      li.appendChild(str);
-    }else if(typeOf(msg) === IsType[11]){// HTMLDocument
-      let str = this._createString('document 相关请直接查看浏览器自带Elements面板');
-      li.appendChild(str);
-    } */
+      childToAppend = fun;
+    }
 
+    li.appendChild(childToAppend);
     Console.DOM_NODE.appendChild(li);
   }
 
